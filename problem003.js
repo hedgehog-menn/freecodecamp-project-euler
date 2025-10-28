@@ -1,6 +1,10 @@
-function isPrime(num) {
-  for (let i = 2; i < num; i++) {
-    if (num % i === 0) {
+function isPrime(num, begin = 2) {
+  if (num === 2) {
+    return true;
+  }
+
+  for (let i = begin; i < num; i++) {
+    if (num % 2 !== 0 && num % i === 0) {
       return false;
     }
   }
@@ -9,21 +13,21 @@ function isPrime(num) {
 }
 
 function largestPrimeFactor(number) {
-  let biggestPrime = number % 2 === 0 ? 2 : null;
+  let bufNum = number;
+  let biggestPrime = 2;
 
-  for (let i = 2; i < number; i++) {
-    if (number % i == 0 && isPrime(i)) {
-      biggestPrime = i;
-    }
+  for (let i = 3; i <= bufNum; i++) {
+    if (bufNum % 2 !== 0 && bufNum % i == 0 && isPrime(i, bufNum)) {
+      if (i > biggestPrime) {
+        biggestPrime = i;
+      }
 
-    // work around for big number test case
-    // TODO: handle Time Out failed
-    if (i > 20000) {
-      return 6857;
+      // handle big number, reduce its size
+      bufNum = bufNum / biggestPrime;
     }
   }
 
-  return biggestPrime || number;
+  return biggestPrime;
 }
 
 largestPrimeFactor(13195);

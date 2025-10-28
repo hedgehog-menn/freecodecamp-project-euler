@@ -1,6 +1,9 @@
 // from Problem 3
-function isPrime(num) {
-  for (let i = 2; i < num; i++) {
+function isPrime(num, begin = 2) {
+  if (num === 2) {
+    return true;
+  }
+  for (let i = begin; i < num; i++) {
     if (num % i === 0) {
       return false;
     }
